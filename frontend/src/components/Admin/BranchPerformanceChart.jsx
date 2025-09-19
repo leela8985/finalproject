@@ -16,7 +16,8 @@ function BranchPerformanceChart({ semester }) {
                 setLoading(true);
                 setError(null);
                 // Use REACT_APP_API_URL from environment
-                const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+                const baseUrl = process.env.REACT_APP_API_URL;
+                if (!baseUrl) throw new Error('REACT_APP_API_URL is not set');
                 const response = await axios.get(
                     `${baseUrl}/api/branch-performance/${semester}`,
                     {
@@ -54,7 +55,6 @@ function BranchPerformanceChart({ semester }) {
             // Create PDF document
             const pdf = new jsPDF('p', 'mm', 'a4');
             const pageWidth = pdf.internal.pageSize.getWidth();
-            const pageHeight = pdf.internal.pageSize.getHeight();
 
             // Enable PDF compression
             pdf.setProperties({
