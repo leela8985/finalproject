@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 export const connectToDB = async () => {
     try {
-        const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/Projectexpo';
+    const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI || process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/Projectexpo';
         const dbName = process.env.MONGODB_DBNAME || process.env.MONGO_DB || undefined;
 
         if (!mongoUri) {
