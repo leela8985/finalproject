@@ -86,3 +86,5 @@ When deploying the frontend as a static site on Render, ensure client-side route
 ```
 
 This causes the server to return `index.html` for any path and lets the React router handle routing client-side.
+
+Alternatively, the app has been switched to use `HashRouter` which uses URL hashes (e.g. `/#/login`) so client routes work even without server-side redirects. If you prefer clean URLs without `#`, keep `_redirects` and use `BrowserRouter` instead.
