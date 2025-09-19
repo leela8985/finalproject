@@ -1,0 +1,73 @@
+/* StudentUpdates.css */
+
+.student-updates-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px 0 rgba(32, 41, 52, 0.07);
+}
+
+.student-updates-container h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Responsive grid for update cards */
+.updates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* Individual update card styling */
+.update-card {
+  background: #fff;
+  padding: 1.25rem 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(34, 51, 84, 0.07);
+  transition: box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.update-card:hover {
+  box-shadow: 0 8px 24px rgba(34, 51, 84, 0.15);
+}
+
+.update-title {
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #3858ff;
+  margin-bottom: 0.5rem;
+}
+
+.update-description {
+  font-size: 1rem;
+  color: #344356;
+  margin-bottom: 1rem;
+  flex: 1;
+}
+
+.update-date {
+  font-size: 0.9rem;
+  color: #7e8da3;
+  margin-top: auto;
+  text-align: right;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .student-updates-container {
+    padding: 1rem 0.5rem;
+  }
+  .update-card {
+    padding: 1rem 0.7rem;
+  }
+}
