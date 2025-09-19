@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
 
-const API_URL = 'http://localhost:5000';
+import API_URL from '../config';
 
 function Login({ onLogin }) {
   const [form, setForm] = useState({ roll: '', password: '' });

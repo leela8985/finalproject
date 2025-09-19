@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Upload.css';
 
-const API_URL = 'http://localhost:5000';
+import API_URL from '../config';
 
 function Upload() {
   const [file, setFile] = useState(null);

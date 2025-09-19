@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './ResetPassword.css';
 
-const API_URL = 'http://localhost:5000';
+import API_URL from '../config';
 
 function ResetPassword() {
   const [password, setPassword] = useState('');

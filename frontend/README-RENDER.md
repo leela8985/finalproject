@@ -15,7 +15,9 @@ This React app is a create-react-app project. To deploy on Render as a static si
 
    build
 
-4. Optional: If your backend is on a separate service, set environment variables in Render for API_BASE_URL or similar.
+4. Environment variable: this frontend reads the backend URL from `REACT_APP_API_URL`.
+   - In Render's site settings, add an environment variable named `REACT_APP_API_URL` with your backend URL (for example `https://your-backend.example.com`).
+   - If `REACT_APP_API_URL` is not set, the app falls back to `http://localhost:5000` (useful for local development).
 
 Notes:
 - The project already includes a `build` script in `package.json`.

@@ -5,7 +5,7 @@ import './Result.css';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
-const API_URL = 'http://localhost:5000';
+import API_URL from '../config';
 
 // Update semester options
 const SEMESTER_OPTIONS = [

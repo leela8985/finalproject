@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './ForgotPassword.css';
 
-const API_URL = 'http://localhost:5000';
+import API_URL from '../config';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');

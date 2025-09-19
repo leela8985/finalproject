@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import image1 from '../images/college_logo.png'
 import './StudentBot.css';
+import API_URL from '../config';
 
 // Helper function to render multiline message text.
 const renderMultilineText = (text) => {
@@ -20,9 +21,9 @@ const StudentBot = () => {
     const handleChange = (e) => setMessage(e.target.value);
 
     // Fetch bot response from the backend.
-    const generateBotResponse = async (studentMessage) => {
-      try {
-        const response = await fetch('http://localhost:5000/auth/api/getResponse', {
+        const generateBotResponse = async (studentMessage) => {
+            try {
+                const response = await fetch(`${API_URL}/auth/api/getResponse`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: studentMessage }),
