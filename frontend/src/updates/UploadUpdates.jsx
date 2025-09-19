@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './UploadUpdates.css';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_URL = 'http://localhost:5000';
 
 function UploadUpdates() {
   const [update, setUpdate] = useState({
