@@ -76,3 +76,13 @@ This frontend reads the backend API base URL from an environment variable so it 
 - **`REACT_APP_API_URL`**: Base URL for backend API requests. Example: `http://localhost:5000` or `https://api.example.com`.
 
 Create a file named `.env` in the `frontend/` folder or set the variable in your environment before running the app. A sample file is provided as `.env.example`.
+
+## Single Page App redirect (Render static sites)
+
+When deploying the frontend as a static site on Render, ensure client-side routes work by adding a `_redirects` file in `public/` with the following content:
+
+```
+/*    /index.html   200
+```
+
+This causes the server to return `index.html` for any path and lets the React router handle routing client-side.
