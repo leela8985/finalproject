@@ -1,6 +1,15 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path'; // <-- Add this line!
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+
+// Load environment variables from .env in development
+dotenv.config();
+
+// Fix __dirname for ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 import authRoutes from './routes/auth.js';
 import updatesRouter from './routes/updates.js';
 import materialsRoutes from './routes/materials.js';

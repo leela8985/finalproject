@@ -4,7 +4,8 @@
   "description": "A project to read PDF data and push it to MongoDB",
   "main": "read.js",
   "scripts": {
-    "start": "node read.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
