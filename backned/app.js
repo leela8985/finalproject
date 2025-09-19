@@ -1,7 +1,15 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path'; // <-- Add this line!
-import logger from './Config/logger.js';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+
+// Load environment variables from .env in development
+dotenv.config();
+
+// Fix __dirname for ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 import authRoutes from './routes/auth.js';
 import updatesRouter from './routes/updates.js';
 import materialsRoutes from './routes/materials.js';
@@ -13,13 +21,27 @@ const openAiApiKey = process.env.OPEN_AI;
 
 const app = express();
 
-// Get allowed origin from environment variable or fallback to localhost
-
+// Get allowed origin(s) from environment variable `FRONTEND_ORIGIN`.
+// Accepts a single origin or a comma-separated list of origins.
+const frontendOriginEnv = process.env.FRONTEND_ORIGIN || '';
+const allowedOrigins = frontendOriginEnv ? frontendOriginEnv.split(',').map(s => s.trim()).filter(Boolean) : [];
 
 // Middleware
-const allowedOrigin = process.env.FRONTEND_ORIGIN || 'http://localhost:3000';
 app.use(cors({
-  origin: allowedOrigin,
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    // If no allowed origins configured, allow all but log a warning
+    if (allowedOrigins.length === 0) {
+      console.warn('Warning: FRONTEND_ORIGIN not set; allowing all origins (not recommended for production).');
+      return callback(null, true);
+    }
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('CORS policy: Origin not allowed: ' + origin));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true // Allow cookies and credentials
 }));
@@ -29,7 +51,7 @@ app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
 // Request logger middleware
 app.use((req, res, next) => {
-  logger.info(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   next();
 });
 
@@ -55,7 +77,7 @@ app.use((req, res) => {
 
 // Global error handler for unexpected errors
 app.use((err, req, res, next) => {
-  logger.error('Unexpected error:', err && err.message ? err.message : err);
+  console.error('Unexpected error:', err);
   res.status(500).json({
     success: false,
     error: 'Internal Server Error',
@@ -68,7 +90,7 @@ const openai = new OpenAI({
   baseURL: 'https://openrouter.ai/api/v1',
   apiKey: openAiApiKey,
   defaultHeaders: {
-    'HTTP-Referer': 'http://localhost:3000/',  // Replace as needed
+    'HTTP-Referer': (process.env.FRONTEND_ORIGIN || 'http://localhost:3000') + '/',  // Use frontend origin
     'X-Title': 'Your Site Name',                // Replace as needed
   },
 });
@@ -114,7 +136,7 @@ app.post('/api/getResponse', async (req, res) => {
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  logger.info(`Server running on port ${PORT}. FRONTEND_ORIGIN=${allowedOrigin}`);
+  console.log(`Server running on port ${PORT}`);
 });
 
 export default app;

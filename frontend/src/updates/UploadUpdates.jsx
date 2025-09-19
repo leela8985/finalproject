@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './UploadUpdates.css';
 
-import API_URL from '../config';
+const API_URL = process.env.REACT_APP_API_URL;
 
 function UploadUpdates() {
   const [update, setUpdate] = useState({

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import image3 from '../images/anubabu3.png';
 import image4 from '../images/vision1.png';
 import image5 from '../images/mission1.png';
@@ -19,9 +18,9 @@ function MainHome() {
       <div className="college" id="college">
         <h1>ADARSH COLLEGE OF ENGINEERING</h1>
         <p>NH-216,Gollaprolu , Near Kakinada, Chebrolu, Andhra Pradesh 533449, India</p>
-  <Link to="/login">
-  <button>Login</button>
-  </Link>
+        <a href="/login">
+        <button>Login</button>
+        </a>
         
       </div>
       <div className="more-about">

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './ForgotPassword.css';
 
-import API_URL from '../config';
+const API_URL = process.env.REACT_APP_API_URL;
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');

@@ -9,7 +9,7 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Open your local dev server URL (usually `http://localhost:3000`) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
@@ -68,3 +68,23 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Environment Variables
+
+This frontend reads the backend API base URL from an environment variable so it can point to different backends in development and production.
+
+- **`REACT_APP_API_URL`**: Base URL for backend API requests. Example: `https://api.example.com`.
+
+Create a file named `.env` in the `frontend/` folder or set the variable in your environment before running the app. A sample file is provided as `.env.example`.
+
+## Single Page App redirect (Render static sites)
+
+When deploying the frontend as a static site on Render, ensure client-side routes work by adding a `_redirects` file in `public/` with the following content:
+
+```
+/*    /index.html   200
+```
+
+This causes the server to return `index.html` for any path and lets the React router handle routing client-side.
+
+Alternatively, the app has been switched to use `HashRouter` which uses URL hashes (e.g. `/#/login`) so client routes work even without server-side redirects. If you prefer clean URLs without `#`, keep `_redirects` and use `BrowserRouter` instead.

@@ -3,7 +3,6 @@ import axios from 'axios';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import './BranchPerformanceChart.css';
-import API_URL from '../../config';
 
 function BranchPerformanceChart({ semester }) {
     const [data, setData] = useState(null);
@@ -17,7 +16,7 @@ function BranchPerformanceChart({ semester }) {
                 setLoading(true);
                 setError(null);
                 // Use REACT_APP_API_URL from environment
-                const baseUrl = API_URL;
+                const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
                 const response = await axios.get(
                     `${baseUrl}/api/branch-performance/${semester}`,
                     {
@@ -55,6 +54,7 @@ function BranchPerformanceChart({ semester }) {
             // Create PDF document
             const pdf = new jsPDF('p', 'mm', 'a4');
             const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
 
             // Enable PDF compression
             pdf.setProperties({
