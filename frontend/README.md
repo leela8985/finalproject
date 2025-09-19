@@ -68,3 +68,11 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Environment Variables
+
+This frontend reads the backend API base URL from an environment variable so it can point to different backends in development and production.
+
+- **`REACT_APP_API_URL`**: Base URL for backend API requests. Example: `http://localhost:5000` or `https://api.example.com`.
+
+Create a file named `.env` in the `frontend/` folder or set the variable in your environment before running the app. A sample file is provided as `.env.example`.

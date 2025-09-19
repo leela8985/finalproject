@@ -706,7 +706,7 @@ const openai = new OpenAI({
   baseURL: 'https://openrouter.ai/api/v1',
   apiKey: openAiApiKey,
   defaultHeaders: {
-    'HTTP-Referer': 'http://localhost:3000/',  // Replace as needed
+    'HTTP-Referer': (process.env.FRONTEND_ORIGIN || 'http://localhost:3000') + '/',  // Use frontend origin
     'X-Title': 'Your Site Name',                // Replace as needed
   },
 });

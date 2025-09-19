@@ -12,12 +12,22 @@ const openAiApiKey = process.env.OPEN_AI;
 
 const app = express();
 
-// Get allowed origin from environment variable or fallback to localhost
-
+// Get allowed origin(s) from environment variable `FRONTEND_ORIGIN`.
+// Accepts a single origin or a comma-separated list of origins.
+const frontendOriginEnv = process.env.FRONTEND_ORIGIN || 'http://localhost:3000';
+const allowedOrigins = frontendOriginEnv.split(',').map(s => s.trim()).filter(Boolean);
 
 // Middleware
 app.use(cors({
-  origin:'http://localhost:3000' ,
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('CORS policy: Origin not allowed: ' + origin));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true // Allow cookies and credentials
 }));
@@ -66,7 +76,7 @@ const openai = new OpenAI({
   baseURL: 'https://openrouter.ai/api/v1',
   apiKey: openAiApiKey,
   defaultHeaders: {
-    'HTTP-Referer': 'http://localhost:3000/',  // Replace as needed
+    'HTTP-Referer': (process.env.FRONTEND_ORIGIN || 'http://localhost:3000') + '/',  // Use frontend origin
     'X-Title': 'Your Site Name',                // Replace as needed
   },
 });

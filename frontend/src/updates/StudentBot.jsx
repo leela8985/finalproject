@@ -22,7 +22,8 @@ const StudentBot = () => {
     // Fetch bot response from the backend.
     const generateBotResponse = async (studentMessage) => {
       try {
-        const response = await fetch('http://localhost:5000/auth/api/getResponse', {
+    const apiBase = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+    const response = await fetch(`${apiBase}/auth/api/getResponse`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: studentMessage }),

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Register.css';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 function Register() {
   const [form, setForm] = useState({ roll: '', email: '', password: '', confirmPassword: '' });
