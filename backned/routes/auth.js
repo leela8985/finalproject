@@ -92,9 +92,18 @@ router.post('/register', async (req, res) => {
       });
     }
 
+    // Ensure DB connection is ready
+    if (mongoose.connection.readyState !== 1) {
+      console.error('Registration attempted while DB is not connected. readyState=', mongoose.connection.readyState);
+      return res.status(503).json({
+        success: false,
+        error: 'Service unavailable - database not connected'
+      });
+    }
+
     // Check if user
-    const existingUser = await User.findOne({ 
-      $or: [{ roll }, { email }] 
+    const existingUser = await User.findOne({
+      $or: [{ roll }, { email }]
     });
 
     if (existingUser) {
@@ -119,7 +128,23 @@ router.post('/register', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Registration error:', error);
+    // More detailed logging for registration failures
+    console.error('Registration error:', {
+      message: error.message,
+      name: error.name,
+      stack: error.stack ? error.stack.split('\n').slice(0,5).join('\n') : undefined,
+      dbReadyState: mongoose.connection.readyState
+    });
+
+    // If mongoose is buffering because it's not connected, suggest the root cause
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({
+        success: false,
+        error: 'Service unavailable - database not connected',
+        details: 'Check MONGODB_URI and network access. See server logs for connection attempts.'
+      });
+    }
+
     res.status(400).json({
       success: false,
       error: error.message
@@ -706,7 +731,7 @@ const openai = new OpenAI({
   baseURL: 'https://openrouter.ai/api/v1',
   apiKey: openAiApiKey,
   defaultHeaders: {
-    'HTTP-Referer': (process.env.FRONTEND_ORIGIN || 'http://localhost:3000') + '/',  // Use frontend origin
+    'HTTP-Referer': 'http://localhost:3000/',  // Replace as needed
     'X-Title': 'Your Site Name',                // Replace as needed
   },
 });

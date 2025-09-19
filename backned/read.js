@@ -3,8 +3,10 @@ import path from 'path';
 import fs from 'fs';
 import multer from 'multer';
 import cors from 'cors';
+import mongoose from 'mongoose';
 import { configDotenv } from 'dotenv';
 import { connectToDB } from './Config/ConnectToDB.js';
+import logger from './Config/logger.js';
 import { processPdf } from './pdfProcessor.js'; // Add this import
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/user.js';
@@ -13,7 +15,18 @@ import jwt from 'jsonwebtoken';
 import { getStudentModel } from './Models/student.js';
 
 configDotenv();
-connectToDB();
+
+// Try connecting to DB with retries; do not exit on failure so Render process keeps running
+const init = async () => {
+  const conn = await connectToDB();
+  if (!conn) {
+    logger.warn('Initial DB connection failed. Application will continue running, but database operations will return 503 until connection is restored.');
+  } else {
+    logger.info('DB connected successfully during startup.');
+  }
+};
+
+init();
 
 const app = express();
 app.use(express.json());
@@ -238,4 +251,13 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+});
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  const dbState = mongoose.connection.readyState; // 0 disconnected, 1 connected, 2 connecting
+  res.json({
+    status: 'ok',
+    dbReadyState: dbState
+  });
 });
