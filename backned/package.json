@@ -2,7 +2,7 @@
   "name": "pdf-to-mongodb",
   "version": "1.0.0",
   "description": "A project to read PDF data and push it to MongoDB",
-  "main": "read.js",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js"

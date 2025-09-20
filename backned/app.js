@@ -10,12 +10,13 @@ dotenv.config();
 // Fix __dirname for ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-import authRoutes from './routes/auth.js';
+import authRoutes, { initAuth } from './routes/auth.js';
 import updatesRouter from './routes/updates.js';
 import materialsRoutes from './routes/materials.js';
 
 import bodyParser from 'body-parser';
 import OpenAI from 'openai';
+import { connectToDB } from './Config/ConnectToDB.js';
 
 const openAiApiKey = process.env.OPEN_AI;
 
@@ -62,6 +63,11 @@ app.use('/auth', authRoutes);
 app.use('/api/updates', updatesRouter);
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Health check root route (useful for Render / health probes)
+app.get('/', (req, res) => {
+  res.json({ success: true, message: 'Server is running' });
+});
 
 // Mount materials routes
 app.use('/api/materials', materialsRoutes);
@@ -133,10 +139,22 @@ app.post('/api/getResponse', async (req, res) => {
 });
 
 
-// Start the server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Start the server after establishing DB connection
+const startServer = async () => {
+  try {
+    await connectToDB();
+    // Optionally initialize auth-related services like SMTP (non-blocking)
+    initAuth().catch(err => console.warn('initAuth warning:', err && err.message));
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (err) {
+    console.error('Failed to start server:', err);
+    process.exit(1);
+  }
+};
+
+startServer();
 
 export default app;

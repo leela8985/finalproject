@@ -17,7 +17,12 @@ export const connectToDB = async () => {
             family: 4
         };
 
-        const conn = await mongoose.connect(mongoUri, connectOptions);
+        // Add shorter timeouts so startup fails quickly if DB is unreachable
+        const conn = await mongoose.connect(mongoUri, {
+            ...connectOptions,
+            serverSelectionTimeoutMS: parseInt(process.env.MONGO_SERVER_SELECTION_TIMEOUT_MS || '5000', 10),
+            socketTimeoutMS: parseInt(process.env.MONGO_SOCKET_TIMEOUT_MS || '45000', 10)
+        });
 
         // If a DB name was provided separately, switch to it for logging
         const activeDbName = dbName || conn.connection.name;
