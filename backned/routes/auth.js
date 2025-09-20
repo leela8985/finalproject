@@ -34,8 +34,8 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true, // Use SSL
   auth: {
-    user: process.env.EMAIL_USER || '',
-    pass: process.env.EMAIL_PASS || ''   // Use App Password, not regular password
+    user: 'leelamohankurmapu2004@gmail.com',
+    pass: 'nbmj nfgt etno ogci'   // Use App Password, not regular password
   },
   tls: {
     rejectUnauthorized: false
@@ -66,8 +66,8 @@ const verifyEmailConfig = async () => {
   }
 };
 
-// Do not verify SMTP immediately at module import time to avoid blocking startup.
-// Verification can be triggered by the server after DB connection.
+// Test connection immediately
+verifyEmailConfig();
 
 // Debug logger for auth routes
 router.use((req, res, next) => {
@@ -82,12 +82,10 @@ router.use((req, res, next) => {
 // Registration route
 router.post('/register', async (req, res) => {
   try {
-    console.log('Register request body:', req.body);
     const { roll, email, password } = req.body;
 
     // Validate input
     if (!roll || !email || !password) {
-      console.warn('Registration validation failed - missing fields');
       return res.status(400).json({
         success: false,
         error: 'All fields are required'
@@ -100,8 +98,7 @@ router.post('/register', async (req, res) => {
     });
 
     if (existingUser) {
-      console.warn('Registration attempted for existing user:', { roll, email });
-      return res.status(409).json({
+      return res.status(400).json({
         success: false,
         error: 'User already exists with this roll number or email'
       });
@@ -122,13 +119,10 @@ router.post('/register', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Registration error:', {
-      message: error.message,
-      stack: error.stack
-    });
-    res.status(500).json({
+    console.error('Registration error:', error);
+    res.status(400).json({
       success: false,
-      error: 'Internal Server Error'
+      error: error.message
     });
   }
 });
@@ -137,7 +131,7 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const { roll, password } = req.body;
-    console.log('👤  attempt for:', roll);
+    console.log('👤 Login attempt for:', roll);
 
     const user = await User.findOne({ roll });
     if (!user) {
@@ -358,19 +352,8 @@ const connectSMTP = async (retries = 3) => {
   }
 };
 
-// Export an initializer so the main server can optionally verify SMTP without blocking.
-export const initAuth = async () => {
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    console.warn('SMTP credentials (EMAIL_USER/EMAIL_PASS) not set; skipping SMTP verification.');
-    return false;
-  }
-
-  const ok = await connectSMTP();
-  if (!ok) {
-    console.warn('SMTP verification failed during initAuth');
-  }
-  return ok;
-};
+// Initialize SMTP connection
+connectSMTP();
 
 // Get results route with collection-based querying
 router.get('/results/:roll/:semester', async (req, res) => {
@@ -723,7 +706,7 @@ const openai = new OpenAI({
   baseURL: 'https://openrouter.ai/api/v1',
   apiKey: openAiApiKey,
   defaultHeaders: {
-    'HTTP-Referer': (process.env.FRONTEND_ORIGIN || 'http://localhost:3000') + '/',  // Use frontend origin
+    'HTTP-Referer': 'http://localhost:3000/',  // Replace as needed
     'X-Title': 'Your Site Name',                // Replace as needed
   },
 });

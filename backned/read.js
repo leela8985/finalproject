@@ -13,11 +13,7 @@ import jwt from 'jsonwebtoken';
 import { getStudentModel } from './Models/student.js';
 
 configDotenv();
-// Only connect when this file is executed directly (node read.js),
-// not when it's imported by app.js which already handles DB connection.
-if (process.argv[1] && process.argv[1].endsWith('read.js')) {
-  connectToDB();
-}
+connectToDB();
 
 const app = express();
 app.use(express.json());
