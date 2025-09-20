@@ -21,7 +21,7 @@ function MainHome() {
         <p>NH-216,Gollaprolu , Near Kakinada, Chebrolu, Andhra Pradesh 533449, India</p>
         <Link to="/login">
         <button>Login</button>
-        </Link> 
+        </Link>
         
       </div>
       <div className="more-about">
@@ -84,6 +84,5 @@ That's why you should focus with success team.</p>
     </div>
   );
 }
-
 
 export default MainHome;
