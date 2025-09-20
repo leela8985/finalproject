@@ -84,6 +84,8 @@ h6{
     width: 50px;
     border-radius: 50%;
 }
+
+
 .college
 {
   background-image: url('../images/view1.jpg');
@@ -107,8 +109,8 @@ h6{
 {
     background: #08fb08;
     color: black;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
     margin-left: 600px;
@@ -120,10 +122,10 @@ h6{
     margin-top: 20px;
 }
 .college button:hover {
-    color: aqua;
+    color: black;
     box-shadow: 0 0 5px cyan,
-    0 0 25px cyan, 0 0 cyan,
-    0 0 100px cyan, 0 0 200px cyan
+    0 0 5px cyan, 0 0 cyan,
+    0 0 10px cyan, 0 0 50px cyan
 }
 .college h1{
     color: aqua;
@@ -225,20 +227,7 @@ span
     font-size: 20px;
     font-weight: bold;
 }
-.pdf-text button
-{
-    background: #08fb08;
-    color: black;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    border-radius: 10px;
-    border: 2px solid aqua;
-    margin-top: 20px;
-}
+
 .pdf-text
 {
     border: 2px solid white;
@@ -248,19 +237,7 @@ span
     margin-left: 180px;
     margin-top: 150px;
 }
-.pdf-button input
-{
-    padding-left: 10px;
-    padding-right: 50px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    border: 2px solid black;
-}
-.pdf-button label
-{
-    font-size: 20px;
-    font-weight: bold;
-}
+
 .top{
     position: relative;
     bottom: 55px;
@@ -274,186 +251,183 @@ span
     border-radius: 0.5rem;
 }
 
-/* Mobile Responsive Styles */
+/* Mobile Devices: up to 768px */
 @media screen and (max-width: 768px) {
-    body {
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden;
-        width : 100vw;
-    }
+  /* Global Overrides */
+  body {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    overflow-x: hidden;
+  }
+  
 
-    .header {
-        padding: 5px;
-        flex-direction: column;
-        height: auto;
-        width: 100vw;
-        position: fixed;
-        top: 0;
-    }
 
-    .header h5 {
-        font-size: 18px;
-        margin: 5px 0;
-    }
+  /* Header */
+  .header {
+    padding: 10px;
+    flex-direction: column;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+  }
+  .header h5 {
+    font-size: 18px;
+    margin: 5px auto;
+  }
+  .header img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 5px;
+  }
+  
+  /* Navbar */
+  .navbar {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+  }
+  .navbar a {
+    font-size: 16px;
+    margin: 0 5px;
+  }
+  
+  /* College/Banner Section */
+  .college {
+    height: auto;
+    min-height: 500px;
+    margin-top: 70px; /* leave room for fixed header */
+    background-size: cover;
+    background-position: center;
+    padding: 20px 0;
+  }
+  .college h1 {
+    font-size: 30px;
+    padding-top: 80px;
+    -webkit-text-stroke: 1px black;
+    text-align: center;
+  }
+  .college p {
+    font-size: 18px;
+    text-align: center;
+    -webkit-text-stroke: 0.5px black;
+  }
+  .college button {
+    width: 80%;
+    margin: 20px auto;
+    font-size: 16px;
+    padding: 10px;
+  }
+  
+  /* More-About Section */
+  .more-about {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  .more-about img {
+    width: 100%;
+    height: auto;
+    margin: 20px 0;
+    float: none;
+  }
+  
+  /* About Section */
+  .about h1 {
+    font-size: 28px;
+    text-align: center;
+  }
+  .about p {
+    font-size: 16px;
+    margin: 10px;
+    text-align: justify;
+  }
+  
+  /* Contact Section */
+  .contact {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 20px;
+  }
+  .map img {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+  
+  /* PDF Section */
+  .pdf-text {
+    width: 90%;
+    margin: 100px auto 20px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  .pdf-text input {
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+  }
 
-    .navbar {
-        margin: 10px 0;
-        width: 100%;
-        text-align: center;
-    }
-
-    .navbar a {
-        font-size: 16px;
-        margin: 5px 10px;
-    }
-
-    .college {
-        height: auto;
-        padding: 20px 0;
-        min-height: 500px;
-        width: 100vw;
-        background-size: cover;
-        background-position: center;
-        margin-top: 0;
-    }
-
-    .college h1 {
-        font-size: 30px;
-        padding-top: 100px;
-    }
-
-    .college p {
-        font-size: 18px;
-    }
-
-    .more-about {
-        width: 100vw;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-
-    .more-about img {
-        width: 100%;
-        height: auto;
-        float: none;
-        margin: 20px 0;
-    }
-
-    .contact {
-        width: 100vw;
-        padding: 20px;
-        box-sizing: border-box;
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-
-    .map img {
-        width: 100%;
-        height: auto;
-        margin: 0 auto;
-    }
-
-    .pdf-text {
-        width: 90%;
-        margin: 100px auto 20px;
-        box-sizing: border-box;
-    }
-
-    .pdf-text input {
-        padding: 10px;
-        padding-right: 20px;
-        font-size: 16px;
-    }
-
-    .pdf-text button {
-        font-size: 16px;
-        padding: 8px 15px;
-    }
-
-    .last-text {
-        width: 100vw;
-        padding: 15px;
-        box-sizing: border-box;
-    }
-
-    .login {
-        width: 90%;
-        margin: 20px auto;
-    }
-
-    .main {
-        width: 90%;
-        margin: 0 auto;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-
-    .main input {
-        width: 100%;
-        margin: 5px 0;
-    }
-
-    .button {
-        width: 100%;
-        margin-top: 10px;
-    }
+  /* Last Text Section */
+  .last-text p {
+    padding: 15px;
+    font-size: 14px;
+    text-align: center;
+  }
+}
+.college button{
+    background: #08fb08;
+    color: black;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 400px;
+    margin-right: 400px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 2px solid aqua;
+    margin-top: 20px;
 }
 
-/* Small Mobile Devices */
+
+/* Extra Small Devices: up to 480px */
 @media screen and (max-width: 480px) {
-    .college {
-        height: calc(100vh - 70px);
-        margin-top: 70px;
-    }
-
-    .college h1 {
-        font-size: 24px;
-    }
-
-    .college p {
-        font-size: 16px;
-    }
-
-    .navbar a {
-        font-size: 14px;
-        margin: 5px;
-    }
-
-    .header h5 {
-        font-size: 16px;
-    }
-
-    .pdf-text {
-        padding: 15px;
-    }
-
-    .pdf-text button {
-        font-size: 16px;
-        padding: 8px 15px;
-    }
-
-    .main {
-        width: 90%;
-        margin: 0 auto;
-        padding: 15px;
-        box-sizing: border-box;
-    }
-
-    .more-about img {
-        width: 100%;
-        height: auto;
-        margin: 10px 0;
-    }
-
-    .contact-text h1 {
-        font-size: 28px;
-    }
-
-    .map img {
-        height: 200px;
-        object-fit: cover;
-    }
+  .header h5 {
+    font-size: 16px;
+  }
+  .college h1 {
+    font-size: 24px;
+  }
+  .college p {
+    font-size: 16px;
+  }
+  .navbar a {
+    font-size: 14px;
+    margin: 5px;
+  }
+  .pdf-text {
+    margin: 80px auto 20px;
+    padding: 15px;
+  }
 }
-
+.college button {
+    background: #08fb08;
+    color: black;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 400px;
+    margin-right: 400px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 2px solid aqua;
+    margin-top: 20px;
+}
 

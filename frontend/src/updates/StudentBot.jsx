@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import image1 from '../images/college_logo.png'
 import './StudentBot.css';
 
+
+const API_URL = process.env.REACT_APP_API_URL
+
 // Helper function to render multiline message text.
 const renderMultilineText = (text) => {
   return text.split('\n').map((line, index) => (
@@ -22,9 +25,7 @@ const StudentBot = () => {
     // Fetch bot response from the backend.
     const generateBotResponse = async (studentMessage) => {
       try {
-    const apiBase = process.env.REACT_APP_API_URL;
-    if (!apiBase) throw new Error('REACT_APP_API_URL is not set');
-    const response = await fetch(`${apiBase}/auth/api/getResponse`, {
+        const response = await fetch(`${API_URL}/auth/api/getResponse`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: studentMessage }),
