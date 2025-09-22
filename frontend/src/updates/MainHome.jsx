@@ -71,7 +71,7 @@ That's why you should focus with success team.</p>
           <form>
             <br />
             <br /><br />
-            <a href="https://www.google.com/maps/place/Adarsh+College+of+Engineering/@16.973679,82.224658,17z/data=!3m1!4b1!4m6!3m5!1s0x3a35f2c7d8e9b2b5:0x7f8a0c4e2d6f8c9b!8m2!3d16.973679!4d82.224658!16s%2Fg%2F11c1gqjv_5?entry=ttu" target="_blank" rel="noopener noreferrer">
+            <a href="https://maps.app.goo.gl/Mq3yXHKM7fCHPAQaA" target="_blank" rel="noopener noreferrer">
             <img src={image6} alt="map" />
             </a>
           </form>
@@ -84,5 +84,6 @@ That's why you should focus with success team.</p>
     </div>
   );
 }
+
 
 export default MainHome;
