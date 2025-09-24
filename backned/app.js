@@ -63,11 +63,11 @@ app.use((err, req, res, next) => {
 
 
 const openai = new OpenAI({
-  baseURL: 'https://openrouter.ai/api/v1',
-  apiKey: openAiApiKey,
+  baseURL: process.env.OPENAI_ROUTE || 'https://api.openai.com/v1',
+  apiKey: process.env.OPEN_AI,
   defaultHeaders: {
-    'HTTP-Referer': 'http://localhost:3000/',  // Replace as needed
-    'X-Title': 'Your Site Name',                // Replace as needed
+    'HTTP-Referer': process.env.FRONTEND_ORIGIN || 'http://localhost:3000',
+    'X-Title': 'Your Site Name',
   },
 });
 
@@ -81,10 +81,9 @@ app.post('/api/getResponse', async (req, res) => {
 
     console.log("Received message from user:", message);
 
-    // Call OpenAI via OpenRouter
     const completion = await openai.chat.completions.create({
       model: 'openai/gpt-4o',
-      max_tokens: 800, // Adjust this value to stay within your credits.
+      max_tokens: 256,
       messages: [
         {
           role: 'user',
@@ -93,18 +92,18 @@ app.post('/api/getResponse', async (req, res) => {
       ],
     });
 
-    // Log the full OpenAI response
-    console.log("Full OpenAI response:", completion);
-
-    // Extract and log the bot's reply
     const botReply = completion.choices?.[0]?.message?.content || "No reply received";
     console.log("Bot reply:", botReply);
 
-    // Send the bot's reply back to the client
     return res.json({ reply: botReply });
   } catch (error) {
     console.error("Error fetching bot response:", error);
-    return res.status(500).json({ error: 'Internal Server Error' });
+
+    // Send detailed error response for debugging
+    return res.status(500).json({
+      error: 'Internal Server Error',
+      details: error.message || error,
+    });
   }
 });
 
