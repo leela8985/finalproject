@@ -85,5 +85,4 @@ That's why you should focus with success team.</p>
   );
 }
 
-
 export default MainHome;
